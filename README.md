@@ -12,5 +12,5 @@ If you encounter any issues, the parser may be outdated. In that case, consider 
 
 ### Documentation
 For detailed information about Growtopia's items.dat file format, consider the following sources:
-- [growtopia-api specification](https://github.com/H-pun/growtopia-api/blob/master/docs/itemsdat.md)
+- [growtopia-docs specification](https://github.com/H-pun/growtopia-docs/tree/master/items_dat)
 - [GrowDocs specification](https://github.com/iProgramMC/GrowDocs/tree/master/items_dat) 

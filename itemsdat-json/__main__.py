@@ -55,7 +55,7 @@ def parse_itemsdat(buffer: BinaryIO) -> dict:
     return root
 
 
-# Run the parser. # Usage: python itemsdat-parser <items.dat path>
+# Run the parser. # Usage: python itemsdat-json <items.dat path>
 if __name__ == "__main__":
     if len(sys.argv) <= 1:
         print(
