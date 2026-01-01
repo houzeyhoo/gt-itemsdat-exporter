@@ -1,7 +1,7 @@
 from typing import BinaryIO, NamedTuple
 
 # Latest supported version
-MAX_VERSION = 23
+MAX_VERSION = 24
 
 # Used to decrypt item names
 ITEM_NAME_KEY = "PBG892FXX982ABC*"
@@ -136,6 +136,9 @@ def parse_items_dat(
         if version >= 23:
             item["Ingredient1"] = _read_integer(fp, size=2)
             item["Ingredient2"] = _read_integer(fp, size=2)
+
+        if version >= 24:
+            _discard_fixed(fp, n=1)
 
         # Discard extra bytes if specified
         if discard_bytes > 0:
