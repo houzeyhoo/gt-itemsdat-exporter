@@ -15,7 +15,7 @@ EXPORTERS: dict[str, Exporter] = {
 
 class Arguments(Namespace):
     input: BinaryIO
-    format: str = "mjson"
+    format: str = "tsv"
     include_metadata: bool = False
     skip_version_check: bool = False
     discard_bytes: int = 0
@@ -34,8 +34,8 @@ def main() -> int:
         "-f",
         "--format",
         choices=EXPORTERS.keys(),
-        default="mjson",
-        help="Export format (default: mjson)",
+        default="tsv",
+        help="Export format (default: tsv)",
     )
 
     parser.add_argument(
