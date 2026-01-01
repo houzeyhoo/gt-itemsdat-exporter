@@ -1,8 +1,18 @@
 [project]
 name = "gt-itemsdat-exporter"
-version = "0.1.0"
+version = "1.0.0"
 requires-python = ">=3.11"
 dependencies = []
 
+[project.scripts]
+itemsdat-export = "itemsdat_exporter.main:main"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
 [tool.ruff]
 line-length = 120
+
+[tool.setuptools.packages.find]
+where = ["src"]
