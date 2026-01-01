@@ -10,7 +10,7 @@ ITEM_NAME_KEY = "PBG892FXX982ABC*"
 ItemData = dict[str, int | str]
 
 
-class ItemsDatParsed(NamedTuple):
+class ItemsDat(NamedTuple):
     version: int | None
     item_count: int | None
     items: list[ItemData]
@@ -18,7 +18,7 @@ class ItemsDatParsed(NamedTuple):
 
 def parse_items_dat(
     fp: BinaryIO, *, skip_version_check: bool = False, include_metadata: bool = False, skip_bytes: int = 0
-) -> ItemsDatParsed:
+) -> ItemsDat:
     version = _read_integer(fp, size=2)
     if not skip_version_check and version > MAX_VERSION:
         raise ValueError(f"Unsupported items.dat version: {version}, max supported: {MAX_VERSION}")
@@ -146,9 +146,9 @@ def parse_items_dat(
         items.append(item)
 
     if include_metadata:
-        return ItemsDatParsed(version=version, item_count=item_count, items=items)
+        return ItemsDat(version=version, item_count=item_count, items=items)
     else:
-        return ItemsDatParsed(version=None, item_count=None, items=items)
+        return ItemsDat(version=None, item_count=None, items=items)
 
 
 def _discard_fixed(fp: BinaryIO, *, n: int) -> None:
