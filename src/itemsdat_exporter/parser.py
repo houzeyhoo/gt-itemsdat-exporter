@@ -17,7 +17,7 @@ class ItemsDat(NamedTuple):
 
 
 def parse_items_dat(
-    fp: BinaryIO, *, skip_version_check: bool = False, include_metadata: bool = False, skip_bytes: int = 0
+    fp: BinaryIO, *, skip_version_check: bool = False, include_metadata: bool = False, discard_bytes: int = 0
 ) -> ItemsDat:
     version = _read_integer(fp, size=2)
     if not skip_version_check and version > MAX_VERSION:
@@ -137,10 +137,10 @@ def parse_items_dat(
             item["Ingredient1"] = _read_integer(fp, size=2)
             item["Ingredient2"] = _read_integer(fp, size=2)
 
-        # Skip extra bytes if specified
-        if skip_bytes > 0:
-            _discard_fixed(fp, n=skip_bytes)
-        elif skip_bytes == -1:
+        # Discard extra bytes if specified
+        if discard_bytes > 0:
+            _discard_fixed(fp, n=discard_bytes)
+        elif discard_bytes == -1:
             _discard_string(fp)
 
         items.append(item)
