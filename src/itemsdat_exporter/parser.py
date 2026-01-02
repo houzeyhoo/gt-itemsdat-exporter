@@ -6,7 +6,6 @@ MAX_VERSION = 24
 # Used to decrypt item names
 ITEM_NAME_KEY = "PBG892FXX982ABC*"
 
-
 ItemData = dict[str, int | str]
 
 
@@ -16,9 +15,7 @@ class ItemsDat(NamedTuple):
     items: list[ItemData]
 
 
-def parse_items_dat(
-    fp: BinaryIO, *, skip_version_check: bool = False, include_metadata: bool = False, discard_bytes: int = 0
-) -> ItemsDat:
+def parse_items_dat(fp: BinaryIO, *, skip_version_check: bool = False, discard_bytes: int = 0) -> ItemsDat:
     version = _read_integer(fp, size=2)
     if not skip_version_check and version > MAX_VERSION:
         raise ValueError(f"Unsupported items.dat version: {version}, max supported: {MAX_VERSION}")
@@ -148,10 +145,7 @@ def parse_items_dat(
 
         items.append(item)
 
-    if include_metadata:
-        return ItemsDat(version=version, item_count=item_count, items=items)
-    else:
-        return ItemsDat(version=None, item_count=None, items=items)
+    return ItemsDat(version=version, item_count=item_count, items=items)
 
 
 def _discard_fixed(fp: BinaryIO, *, n: int) -> None:

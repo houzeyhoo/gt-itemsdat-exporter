@@ -16,18 +16,17 @@ EXPORTERS: dict[str, Exporter] = {
 class Arguments(Namespace):
     input: BinaryIO
     format: str = "tsv"
-    include_metadata: bool = False
     skip_version_check: bool = False
     discard_bytes: int = 0
 
 
 def main() -> int:
-    parser = ArgumentParser(description="Tool for exporting items.dat to various formats")
+    parser = ArgumentParser(description="Tool for exporting Growtopia's items.dat file to other formats")
 
     parser.add_argument(
         "input",
         type=FileType("rb"),
-        help="Path to the items.dat file",
+        help="path to the items.dat file",
     )
 
     parser.add_argument(
@@ -35,27 +34,23 @@ def main() -> int:
         "--format",
         choices=EXPORTERS.keys(),
         default="tsv",
-        help="Export format (default: tsv)",
+        help="export format (default: tsv)",
     )
 
     parser.add_argument(
-        "-m",
-        "--include-metadata",
-        action="store_true",
-        help="Include items.dat version and item count in the export (if supported by the format)",
-    )
-
-    parser.add_argument(
+        "-V",
         "--skip-version-check",
         action="store_true",
-        help="Attempt to parse items.dat even if the version is unrecognized",
+        help="attempt to parse even if the items.dat version is unsupported",
     )
 
     parser.add_argument(
+        "-d",
         "--discard-bytes",
         type=int,
         default=0,
-        help="Discard extra N bytes at the end of every item entry (default: 0)",
+        metavar="N",
+        help="discard extra N bytes at the end of every item (default: 0)",
     )
     args = parser.parse_args(namespace=Arguments())
 
@@ -64,7 +59,6 @@ def main() -> int:
             items_dat = parse_items_dat(
                 fp,
                 skip_version_check=args.skip_version_check,
-                include_metadata=args.include_metadata,
                 discard_bytes=args.discard_bytes,
             )
         exporter = EXPORTERS[args.format]

@@ -12,16 +12,11 @@ class JSONExporter(Exporter):
         self._minify = minify
 
     def export(self, items_dat: ItemsDat, fp: TextIO) -> None:
-        output = {}
-
-        # Output metadata if present
-        if items_dat.version is not None:
-            output["version"] = items_dat.version
-        if items_dat.item_count is not None:
-            output["item_count"] = items_dat.item_count
-
-        output["items"] = items_dat.items
-
+        output = {
+            "version": items_dat.version,
+            "item_count": items_dat.item_count,
+            "items": items_dat.items,
+        }
         if self._minify:
             json.dump(output, fp, separators=(",", ":"))
         else:
